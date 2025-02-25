@@ -5,9 +5,13 @@ import dynamic from "next/dynamic";
 import PostTrailer from "./PostTrailer";
 import { useBlog } from "./BlogContext";
 import { Post } from "../types";
+import { CATEGORY_USER_MAP } from "../types/constants";
 
 // Dynamically import Slider with SSR disabled
-const Slider = dynamic(() => import("react-slick"), { ssr: false });
+const Slider = dynamic(() => import("react-slick"), {
+  ssr: false,
+  loading: () => <div>Loading posts...</div>, // Fallback during hydration
+});
 
 export default function BlogList() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -18,14 +22,14 @@ export default function BlogList() {
     const fetchPosts = async () => {
       const res = await fetch("https://jsonplaceholder.typicode.com/posts");
       const data = await res.json();
-      setPosts(data.slice(0, 20));
+      setPosts(data.slice(0, 50));
     };
     fetchPosts();
   }, []);
 
-  // Filter and sort posts
+  // Filter posts by userId based on category
   const filteredPosts = filterCategory
-    ? posts.filter((post) => post.userId === parseInt(filterCategory))
+    ? posts.filter((post) => post.userId === CATEGORY_USER_MAP[filterCategory as keyof typeof CATEGORY_USER_MAP])
     : posts;
 
   const sortedPosts = [...filteredPosts].sort((a, b) => {
@@ -36,56 +40,30 @@ export default function BlogList() {
   });
 
   const sliderSettings = {
-    dots: false,
-    arrows: false,
-    draggable:true,
-    infinite: true,
-    speed: 500,
-    centerPadding: '54px',
+    arrows:false,
     slidesToShow: 4, // Default for desktop (4 items)
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: "0px",
-    dotsClass: "slick-dots slick-dots-top",
-    draggable: true, // Explicitly enable mouse dragging
-    touchThreshold: 5, // Lower threshold for touch/mouse sensitivity
+
     responsive: [
       {
-        breakpoint: 1680, // xl (desktop)
+        breakpoint: 1280, // xl (desktop)
         settings: {
-          slidesToShow: 4,
-          centerMode: true,
-          centerPadding: "0px",
-          draggable: true,
+          slidesToShow: 3,
         },
       },
       {
-        breakpoint: 1280, // lg (large tablet)
+        breakpoint: 1024, // lg (large tablet)
         settings: {
-          slidesToShow: 3,
-          centerMode: true,
-          centerPadding: "0px",
-          draggable: true,
+          slidesToShow: 2,
         },
       },
       {
         breakpoint: 768, // md (tablet)
         settings: {
-          slidesToShow: 2,
-          centerMode: true,
-          centerPadding: "0px",
-          draggable: true,
-        },
-      },
-      {
-        breakpoint: 480, // sm (mobile)
-        settings: {
           slidesToShow: 1,
-          centerMode: true,
-          centerPadding: "0px",
-          draggable: true,
+          rows:4
         },
-      },
+      }
     ],
   };
 

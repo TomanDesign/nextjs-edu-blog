@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
+import { CATEGORY_USER_MAP } from "../types/constants";
 
 interface BlogContextType {
   filterCategory: string | null;

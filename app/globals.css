@@ -15,14 +15,35 @@
 
 /* Customize slick slider */
 .slick-prev, .slick-next {
-  @apply text-gray-800 z-10;
-  width: 30px;
-  height: 30px;
+  @apply z-10;
+  width: 16px !important;
+  height: 28px !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  font-size: 0 !important; /* Hide default text */
 }
-.slick-prev:before, .slick-next:before {
-  font-size: 30px;
-  color: #6B7280; /* secondary-text */
+
+.slick-prev::before, .slick-next::before {
+  content: "" !important;
 }
+
+
+.slick-prev {
+  transform: rotate(180deg) !important;
+  background-image: url('/assets/svg/slick-arrow.svg') !important;
+  left: 10px !important;
+}
+.slick-next {
+  background-image: url('/assets/svg/slick-arrow.svg') !important;
+  right: 10px !important;
+}
+
+.slick-arrow {
+  z-index: 15;
+  opacity: 1 !important;
+  cursor: pointer;
+}
+
 .slick-dots li button:before {
   opacity: 1 !important;
   font-size: 16px !important; /* 16px dots */
@@ -44,7 +65,7 @@
 /* Move dots to top and center */
 .slick-dots-top {
   position: absolute;
-  top: -40px;
+  top: -50px;
   left: 0;
   right: 0;
   display: flex !important;
@@ -52,12 +73,12 @@
   padding: 0;
   margin: 0;
   list-style: none;
+  height: 20px;
 }
 
-/* Header title styling */
 header {
   @apply bg-white;
 }
 header h1 {
-  @apply text-3xl text-[#4A90E2] font-display; /* Blue for "Blog edukacyjny" */
+  @apply text-3xl text-[#4A90E2] font-display;
 }

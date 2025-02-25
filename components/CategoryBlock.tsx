@@ -13,7 +13,7 @@ export default function CategoryBlock({ category }: CategoryBlockProps) {
   return (
     <div
       onClick={() => setFilterCategory(category.name)}
-      className={`rounded-tl-[60px] rounded-br-[60px] shadow-lg cursor-pointer ${category.color} text-white flex flex-col items-center w-[366px] h-[457px]`}
+      className={`rounded-tl-[60px] rounded-br-[60px] shadow-lg cursor-pointer ${category.color} text-white flex flex-col items-center max-w-[340px] md:max-w-[366px] h-[457px]`}
     >
       <div className="relative w-full h-[228.5px]">
         <Image
