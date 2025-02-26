@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import CategoryBlock from "../components/CategoryBlock";
 import BlogList from "../components/BlogList";
-import { CATEGORY_USER_MAP } from "../types/constants";
+import { CATEGORY_CONFIG } from "../types/constants";
 
 // Dynamically import Slider with SSR disabled
 const Slider = dynamic(() => import("react-slick"), {
